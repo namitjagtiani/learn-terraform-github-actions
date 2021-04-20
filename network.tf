@@ -55,7 +55,7 @@ resource "azurerm_route_table" "wus-rt" {
 
   route {
     name                   = "example"
-    address_prefix         = "0.0.0.0"
+    address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.10.1.1"
   }
