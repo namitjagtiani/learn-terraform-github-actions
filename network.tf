@@ -1,10 +1,17 @@
+#####################################################################
+#                     Network Security Groups                       #
+#####################################################################
+
 resource "azurerm_network_security_group" "wus-nsg" {
   name                = "NSGS1"
   location            = azurerm_resource_group.wus-rg.location
   resource_group_name = azurerm_resource_group.wus-rg.name
 }
+#####################################################################
+#                         Virtual Networks                           #
+#####################################################################
 
-resource "azurerm_virtual_network" "example" {
+resource "azurerm_virtual_network" "wus-vnet" {
   name                = "virtualNetwork1"
   location            = azurerm_resource_group.wus-rg.location
   resource_group_name = azurerm_resource_group.wus-rg.name
@@ -37,6 +44,10 @@ resource "azurerm_virtual_network" "example" {
   }
 }
 
+#####################################################################
+#                   Route Tables and Associations                   #
+#####################################################################
+
 resource "azurerm_route_table" "wus-rt" {
   name                = "example-routetable"
   location            = azurerm_resource_group.wus-rg.location
@@ -51,16 +62,16 @@ resource "azurerm_route_table" "wus-rt" {
 }
 
 resource "azurerm_subnet_route_table_association" "wus-rt-association-1" {
-  subnet_id      = (azurerm_virtual_network.example.subnet[*])[0].id
+  subnet_id      = (azurerm_virtual_network.wus-vnet.subnet[*])[0].id
   route_table_id = azurerm_route_table.wus-rt.id
 }
 
 resource "azurerm_subnet_route_table_association" "wus-rt-association-2" {
-  subnet_id      = (azurerm_virtual_network.example.subnet[*])[1].id
+  subnet_id      = (azurerm_virtual_network.wus-vnet.subnet[*])[1].id
   route_table_id = azurerm_route_table.wus-rt.id
 }
 
 resource "azurerm_subnet_route_table_association" "wus-rt-association-3" {
-  subnet_id      = (azurerm_virtual_network.example.subnet[*])[2].id
+  subnet_id      = (azurerm_virtual_network.wus-vnet.subnet[*])[2].id
   route_table_id = azurerm_route_table.wus-rt.id
 }
