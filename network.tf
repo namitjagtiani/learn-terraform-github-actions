@@ -49,13 +49,13 @@ resource "azurerm_virtual_network" "wus-vnet" {
 #####################################################################
 
 resource "azurerm_route_table" "wus-rt" {
-  name                = "example-routetable"
+  name                = "wus-rt"
   location            = azurerm_resource_group.wus-rg.location
   resource_group_name = azurerm_resource_group.wus-rg.name
 
   route {
     name                   = "example"
-    address_prefix         = "0.0.0.0"
+    address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.10.1.1"
   }
